@@ -146,6 +146,11 @@ class Instructor extends Lambdasian {
   grade(student, subject){
     return(`${student.name} receives a perfect score on ${subject}`);
   }
+  modifyGrade(student){
+    let grade = Math.floor(Math.random()*10) + 1; 
+    grade *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+    student.grade += grade;
+  }
 }
 
 /*
@@ -169,6 +174,7 @@ class Student extends Lambdasian {
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = 70;
   }
   listSubjects(){
     return("Loving " + this.favSubjects);
@@ -178,6 +184,11 @@ class Student extends Lambdasian {
   }
   sprintChallenge(subject){
     return(`${this.name} has begun a sprint challenge on ${subject}`);
+  }
+  graduate(){
+    if(this.grade >= 70)
+      return(this.name + " has graduated from Lambda School!");
+    return(this.name + " has still needs to do some work before graduating");
   }
 }
 
@@ -208,6 +219,26 @@ class ProjectManager extends Instructor {
   }
 }
 
+const student1 = new Student({
+  name: "Student 1",
+  age: 19,
+  location: "Somewhere",
+  previousBackground: "College",
+  className: "WEBPT22",
+  favSubjects: ["Javascript", "HTML", "CSS"]
+});
+const instructor1 = new Instructor({
+  name: "Instructor 1",
+  age: 23,
+  location: "Somewhere",
+  specialty: "Redux",
+  favLanguage: "Javascript",
+  catchPhrase: "Never give up!"
+});
+console.log(student1.grade);
+instructor1.modifyGrade(student1);
+console.log(student1.grade);
+console.log(student1.graduate());
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
